@@ -4,8 +4,10 @@ defmodule AvProject.Products do
   """
 
   import Ecto.Query, warn: false
-  alias AvProject.Repo
+  import AvProject.Queries.ProductQuery
+  alias AvProject.Utils.SessionUtils
 
+  alias AvProject.Repo
   alias AvProject.Products.Product
 
   @doc """
@@ -18,9 +20,20 @@ defmodule AvProject.Products do
 
   """
   def list_products do
-    from(p in Product, order_by: [p.brand, p.name, p.description])
-    |> Repo.all()
+    store_id = SessionUtils.get_store_id()
+
+    Product
+    |> by_store_id(store_id)
+    |> Repo.all
   end
+
+  # defp by(store_id) do
+  #   from p in Product,
+  #     join: s in Store,
+  #     on: p.store_id == s.id,
+  #     where: p.store_id == ^store_id,
+  #     select: p
+  # end
 
   @doc """
   Gets a single product.
@@ -36,7 +49,16 @@ defmodule AvProject.Products do
       ** (Ecto.NoResultsError)
 
   """
-  def get_product!(id), do: Repo.get!(Product, id)
+  # def get_product!(id), do: Repo.get!(Product, id)
+  def get_product!(id) do
+    store_id = SessionUtils.get_store_id()
+
+    Product
+    |> by_store_id(store_id)
+    |> by_id(id)
+    |> select_all
+    |> Repo.one
+  end
 
   @doc """
   Creates a product.
@@ -51,8 +73,11 @@ defmodule AvProject.Products do
 
   """
   def create_product(attrs \\ %{}) do
+    store_id = SessionUtils.get_store_id()
+    attrs_with_store_id = attrs |> Map.put("store_id", store_id)
+
     %Product{}
-    |> Product.changeset(attrs)
+    |> Product.changeset(attrs_with_store_id)
     |> Repo.insert()
   end
 
