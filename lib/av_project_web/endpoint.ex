@@ -47,5 +47,6 @@ defmodule AvProjectWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug Pow.Plug.Session, otp_app: :av_project
   plug AvProjectWeb.Router
 end

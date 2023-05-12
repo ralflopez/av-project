@@ -1,5 +1,6 @@
 defmodule AvProjectWeb.Router do
   use AvProjectWeb, :router
+  use Pow.Phoenix.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -12,6 +13,12 @@ defmodule AvProjectWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  scope "/" do
+    pipe_through :browser
+
+    pow_routes()
   end
 
   scope "/", AvProjectWeb do
