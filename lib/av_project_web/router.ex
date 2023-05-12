@@ -15,6 +15,11 @@ defmodule AvProjectWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticated do
+    plug Pow.Plug.RequireAuthenticated,
+      error_handler: Pow.Phoenix.PlugErrorHandler
+  end
+
   scope "/" do
     pipe_through :browser
 
@@ -25,6 +30,10 @@ defmodule AvProjectWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+  end
+
+  scope "/", AvProjectWeb do
+    pipe_through [:browser, :authenticated]
 
     live "/products", ProductLive.Index, :index
     live "/products/new", ProductLive.Index, :new
