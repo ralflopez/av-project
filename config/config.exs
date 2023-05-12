@@ -60,7 +60,6 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :av_project, :pow,
-  web_module: AvProjectWeb,
   user: AvProject.Users.User,
   repo: AvProject.Repo
 
