@@ -2,11 +2,15 @@ defmodule AvProject.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias AvProject.Stores.Store
+
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+
+    belongs_to :store, Store
 
     timestamps()
   end
