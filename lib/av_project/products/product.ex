@@ -3,6 +3,7 @@ defmodule AvProject.Products.Product do
   import Ecto.Changeset
 
   alias AvProject.Stores.Store
+  alias AvProject.Inventory.InventoryLogItem
 
   schema "products" do
     field :sku, :string
@@ -13,6 +14,7 @@ defmodule AvProject.Products.Product do
     field :price, :float
 
     belongs_to :store, Store
+    has_many :inventory_log_items, InventoryLogItem
 
     timestamps()
   end

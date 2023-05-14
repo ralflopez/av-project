@@ -4,6 +4,7 @@ defmodule AvProject.Stores.Store do
 
   alias AvProject.Products.Product
   alias AvProject.Accounts.User
+  alias AvProject.Inventory.InventoryLog
 
   schema "store" do
     field :description, :string
@@ -11,6 +12,7 @@ defmodule AvProject.Stores.Store do
 
     has_many :products, Product
     has_many :users, User
+    has_many :inventory_logs, InventoryLog
 
     timestamps()
   end
