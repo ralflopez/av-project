@@ -19,10 +19,11 @@ defmodule AvProjectWeb.ProductLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
+        <.input field={@form[:sku]} type="text" label="SKU" />
         <.input field={@form[:brand]} type="text" label="Brand" />
         <.input field={@form[:name]} type="text" label="Name" />
         <.input field={@form[:description]} type="text" label="Description" />
-        <.input field={@form[:category]} type="text" label="Category" />
+        <.input field={@form[:category]} type="text" label="Category" value="Tire" />
         <.input field={@form[:price]} type="number" label="Price" step="any" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Product</.button>
