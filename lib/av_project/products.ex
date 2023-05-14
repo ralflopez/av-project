@@ -5,23 +5,20 @@ defmodule AvProject.Products do
 
   import Ecto.Query, warn: false
   import AvProject.Queries.ProductQuery
-  alias AvProject.Utils.SessionUtils
 
   alias AvProject.Repo
   alias AvProject.Products.Product
 
   @doc """
-  Returns the list of products.
+  Returns the list of products by store_id.
 
   ## Examples
 
-      iex> list_products()
+      iex> list_products(store_id)
       [%Product{}, ...]
 
   """
-  def list_products do
-    store_id = SessionUtils.get_store_id()
-
+  def list_products(store_id) do
     Product
     |> by_store_id(store_id)
     |> Repo.all
@@ -36,23 +33,20 @@ defmodule AvProject.Products do
   # end
 
   @doc """
-  Gets a single product.
+  Gets a single product by store_id.
 
   Raises `Ecto.NoResultsError` if the Product does not exist.
 
   ## Examples
 
-      iex> get_product!(123)
+      iex> get_product!(store_id, 123)
       %Product{}
 
-      iex> get_product!(456)
+      iex> get_product!(store_id, 456)
       ** (Ecto.NoResultsError)
 
   """
-  # def get_product!(id), do: Repo.get!(Product, id)
-  def get_product!(id) do
-    store_id = SessionUtils.get_store_id()
-
+  def get_product!(store_id, id) do
     Product
     |> by_store_id(store_id)
     |> by_id(id)
@@ -73,11 +67,8 @@ defmodule AvProject.Products do
 
   """
   def create_product(attrs \\ %{}) do
-    store_id = SessionUtils.get_store_id()
-    attrs_with_store_id = attrs |> Map.put("store_id", store_id)
-
     %Product{}
-    |> Product.changeset(attrs_with_store_id)
+    |> Product.changeset(attrs)
     |> Repo.insert()
   end
 

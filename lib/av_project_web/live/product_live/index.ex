@@ -5,8 +5,13 @@ defmodule AvProjectWeb.ProductLive.Index do
   alias AvProject.Products.Product
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, stream(socket, :products, Products.list_products())}
+  def mount(_params, session, socket) do
+    %{id: user_id, store_id: store_id} = session["current_user"]
+
+    {:ok, socket
+      |> assign(:store_id, store_id)
+      |> assign(:user_id, user_id)
+      |> stream(:products, Products.list_products(store_id)) }
   end
 
   @impl true
@@ -14,10 +19,10 @@ defmodule AvProjectWeb.ProductLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
+  defp apply_action(%{ assigns: %{store_id: store_id}} = socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Product")
-    |> assign(:product, Products.get_product!(id))
+    |> assign(:product, Products.get_product!(store_id, id))
   end
 
   defp apply_action(socket, :new, _params) do
@@ -38,8 +43,8 @@ defmodule AvProjectWeb.ProductLive.Index do
   end
 
   @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
-    product = Products.get_product!(id)
+  def handle_event("delete", %{"id" => id}, %{ assigns: %{store_id: store_id}} = socket) do
+    product = Products.get_product!(store_id, id)
     {:ok, _} = Products.delete_product(product)
 
     {:noreply, stream_delete(socket, :products, product)}

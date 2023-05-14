@@ -28,10 +28,12 @@ defmodule AvProjectWeb.UserAuth do
   def log_in_user(conn, user, params \\ %{}) do
     token = Accounts.generate_user_session_token(user)
     user_return_to = get_session(conn, :user_return_to)
+    user_info = %{id: user.id, store_id: user.store_id}
 
     conn
     |> renew_session()
     |> put_token_in_session(token)
+    |> put_current_user_info_in_session(user_info)
     |> maybe_write_remember_me_cookie(token, params)
     |> redirect(to: user_return_to || signed_in_path(conn))
   end
@@ -215,6 +217,11 @@ defmodule AvProjectWeb.UserAuth do
     conn
     |> put_session(:user_token, token)
     |> put_session(:live_socket_id, "users_sessions:#{Base.url_encode64(token)}")
+  end
+
+  defp put_current_user_info_in_session(conn, user_info) do
+    conn
+    |> put_session(:current_user, user_info)
   end
 
   defp maybe_store_return_to(%{method: "GET"} = conn) do
