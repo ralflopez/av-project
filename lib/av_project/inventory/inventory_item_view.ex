@@ -16,5 +16,6 @@ defmodule AvProject.Inventories.InventoryItemView do
     field :product_id, :id
     field :quantity, :integer
     field :average_purchase_price, :float
+    field :average_sale_price, :float
   end
 end

@@ -6,7 +6,8 @@ defmodule AvProject.Inventories.InventoryLogItem do
   alias AvProject.Products.Product
 
   schema "inventory_log_items" do
-    field :purchase_price, :float, default: 0
+    field :purchase_price, :float, default: 0.0
+    field :sale_price, :float, default: 0.0
     field :quantity, :integer, default: 0
 
     belongs_to :inventory_log, InventoryLog
