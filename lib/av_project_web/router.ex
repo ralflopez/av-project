@@ -21,13 +21,6 @@ defmodule AvProjectWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-
-    live "/products", ProductLive.Index, :index
-    live "/products/new", ProductLive.Index, :new
-    live "/products/:id/edit", ProductLive.Index, :edit
-
-    live "/products/:id", ProductLive.Show, :show
-    live "/products/:id/show/edit", ProductLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
@@ -75,6 +68,18 @@ defmodule AvProjectWeb.Router do
       on_mount: [{AvProjectWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+
+      live "/products", ProductLive.Index, :index
+      live "/products/new", ProductLive.Index, :new
+      live "/products/:id/edit", ProductLive.Index, :edit
+      live "/products/:id", ProductLive.Show, :show
+      live "/products/:id/show/edit", ProductLive.Show, :edit
+
+      live "/inventories", InventoryLive.Index, :index
+      live "/inventories/new", InventoryLive.Index, :new
+      live "/inventories/:id/edit", InventoryLive.Index, :edit
+      live "/inventories/:id", InventoryLive.Show, :show
+      live "/inventories/:id/show/edit", InventoryLive.Show, :edit
     end
   end
 

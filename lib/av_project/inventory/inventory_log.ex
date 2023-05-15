@@ -1,9 +1,9 @@
-defmodule AvProject.Inventory.InventoryLog do
+defmodule AvProject.Inventories.InventoryLog do
   use Ecto.Schema
   import Ecto.Changeset
 
   alias AvProject.Stores.Store
-  alias AvProject.Inventory.InventoryLogItem
+  alias AvProject.Inventories.InventoryLogItem
 
   schema "inventory_logs" do
     belongs_to :store, Store

@@ -1,8 +1,8 @@
-defmodule AvProject.Inventory.InventoryLogItem do
+defmodule AvProject.Inventories.InventoryLogItem do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias AvProject.Inventory.InventoryLog
+  alias AvProject.Inventories.InventoryLog
   alias AvProject.Products.Product
 
   schema "inventory_log_items" do
@@ -16,7 +16,7 @@ defmodule AvProject.Inventory.InventoryLogItem do
   @doc false
   def changeset(inventory_log_item, attrs) do
     inventory_log_item
-    |> cast(attrs, [:quantity, :purchase_price, :product_id])
-    |> validate_required([:quantity, :purchase_price, :product_id])
+    |> cast(attrs, [:quantity, :purchase_price, :product_id, :inventory_log_id])
+    |> validate_required([:quantity, :purchase_price, :product_id, :inventory_log_id])
   end
 end

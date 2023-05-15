@@ -4,7 +4,7 @@ defmodule AvProject.Stores.Store do
 
   alias AvProject.Products.Product
   alias AvProject.Accounts.User
-  alias AvProject.Inventory.InventoryLog
+  alias AvProject.Inventories.InventoryLog
 
   schema "store" do
     field :description, :string

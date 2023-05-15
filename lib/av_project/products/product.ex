@@ -3,7 +3,7 @@ defmodule AvProject.Products.Product do
   import Ecto.Changeset
 
   alias AvProject.Stores.Store
-  alias AvProject.Inventory.InventoryLogItem
+  alias AvProject.Inventories.InventoryLogItem
 
   schema "products" do
     field :sku, :string
