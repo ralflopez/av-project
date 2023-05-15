@@ -11,6 +11,7 @@ defmodule AvProject.Repo.Migrations.AddSalePriceInInventoryLog do
     execute("
       CREATE VIEW inventory_item_view as
       SELECT
+      p.id as id,
       p.id as product_id,
       p.sku as sku,
       p.brand as brand,

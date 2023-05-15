@@ -1,11 +1,9 @@
 defmodule AvProject.Inventories.InventoryItemView do
   use Ecto.Schema
-  import Ecto.Changeset
-
-  alias AvProject.Products.Product
 
   @primary_key false
   schema "inventory_item_view" do
+    field :product_id, :id
     field :sku, :string
     field :brand, :string
     field :category, :string
@@ -13,7 +11,7 @@ defmodule AvProject.Inventories.InventoryItemView do
     field :name, :string
     field :price, :float
 
-    field :product_id, :id
+    field :id, :id
     field :quantity, :integer
     field :average_purchase_price, :float
     field :average_sale_price, :float
